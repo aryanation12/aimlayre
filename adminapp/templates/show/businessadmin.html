@@ -1,0 +1,93 @@
+{% extends 'basefile.html' %} {% load static %} {% block contentAdmin %}
+
+<div class="container-fluid my-4 py-5 mt-4">
+  <br /><br /><br /><br /><br />
+
+ {% for x in object_list  %}  
+ <a href="{% url 'busiup' x.pk %}" class="btn btn-primary">Update</a> 
+ <a href="{% url 'busidel' x.pk %}" class="btn btn-danger">Delete</a> 
+  {% endfor %}
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">serial</th>
+        <th scope="col">Business banner 1</th>
+        <th scope="col">Business banner 2</th>
+        <th scope="col">Business banner 3</th>
+        <th scope="col">Business About slider 1</th>
+        <th scope="col">Business About slider 2</th>
+        <th scope="col">Business About slider 3</th>
+        <th scope="col">Business About slider 4</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+
+       {% for x in object_list  %}
+       
+        <th scope="row">{{x.id}}</th>
+        
+        <td>{{x.Image1}}</td>
+        <td>{{x.Image2}}</td>
+        <td>{{x.Image3}}</td>
+        <td>{{x.aboutimage1}}</td>
+        <td>{{x.aboutimage2}}</td>
+        <td>{{x.aboutimage3}}</td>
+        <td>{{x.aboutimage4}}</td>
+       
+       
+       {% endfor %}
+        {% comment %} <td><a href={% url 'updateabout' x.pk %} class="btn btn-primary btn-sm" >Edit</a></td>
+         {% endcomment %}
+      </tr>
+    </tbody>
+  </table>
+   
+   <table class="table-striped">
+   <thead>
+   <tr>
+    <th scope="col">Business About slider 5</th>
+        <th scope="col">Business About slider 6</th>
+        <th scope="col">Business About slider 7</th>
+        <th scope="col">About Content</th>
+        <th scope="col">Service Content</th>
+        <th scope="col">Solution content</th>
+        <th scope="col">Success story 1 content</th>
+        <th scope="col">Success story 2 content</th>
+        <th scope="col">Success story 2 image</th>
+        <th scope="col">Success story 2 image</th>
+        <th scope="col">Contact</th>
+   </tr>
+   
+   </thead>
+
+   <tbody>
+   <tr>
+     {% for x in object_list  %}
+       <td>{{x.aboutimage5}}</td>
+        <td>{{x.aboutimage6}}</td>
+        <td>{{x.aboutimage7}}</td>
+        <td>{{x.aboutcontent}}</td>
+        <td>{{x.servicecontent}}</td>
+        <td>{{x.solution}}</td>
+        <td>{{x.succestory1}}</td>
+        <td>{{x.succestory2}}</td>
+        <td>{{x.successimage1}}</td>
+        <td>{{x.successimage2}}</td>
+        <td>{{x.contact}}</td>
+
+         {% endfor %}
+   </tr>
+   
+   </tbody>
+   </table>
+  
+
+
+
+
+</div>
+
+{% endblock contentAdmin %}
