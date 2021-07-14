@@ -20,7 +20,7 @@ phases:
 #       - pip install -e .
       - echo Logging in to Amazon ECR...
       - aws --version
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - (aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - IMAGE_NAME="imageapi"
       - REPOSITORY_URI=788989025800.dkr.ecr.ap-south-1.amazonaws.com/firstrepo
       - IMAGE_TAG=prod_$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
