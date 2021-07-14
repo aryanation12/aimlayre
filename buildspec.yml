@@ -20,7 +20,7 @@ phases:
 #       - pip install -e .
       - echo Logging in to Amazon ECR...
       - aws --version
-#       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - IMAGE_NAME="imageapi"
       - REPOSITORY_URI=788989025800.dkr.ecr.ap-south-1.amazonaws.com/firstrepo
       - IMAGE_TAG=prod_$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
@@ -38,9 +38,10 @@ phases:
       - python setup.py sdist bdist_wheel
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+#       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"imageapi-fargate-task","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - cat imagedefinitions.json
 # artifacts:
 artifacts:
     files: imagedefinitions.json
