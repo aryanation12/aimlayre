@@ -33,7 +33,7 @@ phases:
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG 
   post_build:
     commands:
-      - python setup.py sdist bdist_wheel
+#       - python setup.py sdist bdist_wheel
       - echo Build completed on `date`
       - echo Pushing the Docker images...
 #       - docker push $REPOSITORY_URI:$IMAGE_TAG
