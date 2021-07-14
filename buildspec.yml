@@ -18,14 +18,32 @@ phases:
     commands:
       - pip install -r requirements.txt
       - pip install -e .
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - IMAGE_NAME="imageapi"
+      - REPOSITORY_URI=420715881449.dkr.ecr.us-east-1.amazonaws.com/imageapi 
+      - IMAGE_TAG=prod_$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
   build:
     commands:
       - pytest tests/unit/
       - pytest tests/integration/ -rfs
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - echo Image_tag $IMAGE_TAG
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG 
   post_build:
     commands:
       - python setup.py sdist bdist_wheel
-#artifacts:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"imageapi-fargate-task","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+# artifacts:
+artifacts:
+    files: imagedefinitions.json
   #files:
     # - We don't currently preserve any artifacts
   #name: $(date +%Y-%m-%d)
